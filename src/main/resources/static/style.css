@@ -1,0 +1,694 @@
+/*
+ * Online MCQ Examination
+ * Main Stylesheet
+ */
+
+/* =================================
+   GLOBAL STYLES
+================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #87CEEB;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+
+/* =================================
+   COMMON CONTAINER
+================================= */
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+/* =================================
+   COMMON CARD
+================================= */
+
+.card {
+    width: 800px;
+    max-width: 100%;
+
+    background: #ffffff;
+
+    padding: 40px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =================================
+   LOGO
+================================= */
+
+.logo-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 150px;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+
+/* =================================
+   HEADINGS
+================================= */
+
+h1 {
+    text-align: center;
+    color: #17365d;
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: #17365d;
+}
+
+h3 {
+    color: #244f7a;
+}
+
+
+/* =================================
+   INSTRUCTIONS PAGE
+================================= */
+
+.card h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.card ul {
+    margin: 20px 0 25px 25px;
+}
+
+.card li {
+    margin: 14px 0;
+    line-height: 1.6;
+    color: #4b5563;
+}
+
+
+/* =================================
+   CAMERA BOX
+================================= */
+
+.camera-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+.camera-box h3 {
+    margin-bottom: 15px;
+}
+
+video {
+    width: 100%;
+    max-height: 300px;
+
+    background: #111827;
+
+    border-radius: 10px;
+
+    object-fit: cover;
+}
+
+#cameraStatus {
+    margin-top: 12px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =================================
+   BUTTONS
+================================= */
+
+button {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px 22px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    background: #1769aa;
+
+    color: white;
+
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #12558c;
+
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    background: #b8c1cc;
+
+    color: #ffffff;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =================================
+   OK BUTTON
+================================= */
+
+#okButton {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 14px;
+}
+
+
+/* =================================
+   CANDIDATE DETAILS PAGE
+================================= */
+
+#candidateForm {
+    margin-top: 10px;
+}
+
+#candidateForm label {
+    display: block;
+
+    font-weight: 600;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    margin-bottom: 20px;
+
+    outline: none;
+
+    background: #ffffff;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #1769aa;
+
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+}
+
+#candidateForm button {
+    width: 100%;
+
+    margin-top: 5px;
+}
+
+
+/* =================================
+   EXAM HEADER
+================================= */
+
+.exam-header {
+    min-height: 85px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px 35px;
+
+    background: #17365d;
+
+    color: white;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.exam-header h2 {
+    color: white;
+
+    margin-bottom: 6px;
+}
+
+.exam-header p {
+    font-size: 14px;
+
+    color: #dbeafe;
+}
+
+
+/* =================================
+   TIMER
+================================= */
+
+.timer {
+    background: #ffffff;
+
+    color: #17365d;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+/* =================================
+   EXAM LAYOUT
+================================= */
+
+.exam-layout {
+    display: flex;
+
+    gap: 25px;
+
+    padding: 30px;
+
+    max-width: 1400px;
+
+    margin: auto;
+}
+
+.question-section {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* =================================
+   QUESTION CARD
+================================= */
+
+.question-card {
+    background: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
+}
+
+.question-card h3 {
+    font-size: 16px;
+
+    color: #1769aa;
+
+    margin-bottom: 15px;
+}
+
+.question-card h2 {
+    color: #1f2937;
+
+    font-size: 21px;
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+
+/* =================================
+   MCQ OPTIONS
+================================= */
+
+.option {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    margin: 12px 0;
+
+    border: 1px solid #dbe3ec;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    line-height: 1.5;
+}
+
+.option:hover {
+    background: #eaf6fc;
+
+    border-color: #1769aa;
+}
+
+.option input[type="radio"] {
+    width: auto;
+
+    margin: 0;
+
+    cursor: pointer;
+
+    accent-color: #1769aa;
+}
+
+
+/* Selected option */
+
+.option:has(input[type="radio"]:checked) {
+    background: #dff2ff;
+
+    border-color: #1769aa;
+}
+
+
+/* =================================
+   NAVIGATION BUTTONS
+================================= */
+
+.navigation-buttons {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 20px;
+}
+
+.navigation-buttons button {
+    min-width: 120px;
+}
+
+
+/* =================================
+   SUBMIT BUTTON
+================================= */
+
+.submit-button {
+    width: 100%;
+
+    margin-top: 25px;
+
+    background: #c0392b;
+}
+
+.submit-button:hover {
+    background: #a93226;
+}
+
+
+/* =================================
+   SIDEBAR
+================================= */
+
+.sidebar {
+    width: 300px;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
+
+    height: fit-content;
+}
+
+.sidebar h3 {
+    margin-bottom: 15px;
+
+    color: #17365d;
+}
+
+
+/* =================================
+   QUESTION NUMBERS
+================================= */
+
+#questionNumbers {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 25px;
+}
+
+.question-number {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 0;
+
+    background: #edf1f5;
+
+    color: #374151;
+
+    border: 1px solid #d5dce5;
+
+    font-size: 14px;
+}
+
+.question-number:hover {
+    background: #dce8f2;
+
+    color: #17365d;
+}
+
+
+/* Answered question */
+
+.question-number.answered {
+    background: #218c5a;
+
+    color: white;
+
+    border-color: #218c5a;
+}
+
+
+/* =================================
+   EXAM CAMERA
+================================= */
+
+.sidebar video {
+    width: 100%;
+
+    height: 180px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    background: #111827;
+}
+
+
+/* =================================
+   RESULT PAGE
+================================= */
+
+.result-card {
+    max-width: 650px;
+
+    text-align: center;
+}
+
+.result-card h1 {
+    font-size: 28px;
+
+    color: #218c5a;
+}
+
+.result-card > p {
+    color: #6b7280;
+
+    margin-bottom: 25px;
+}
+
+.result-details {
+    margin-top: 25px;
+
+    padding: 25px;
+
+    background: #f8fafc;
+
+    border-radius: 12px;
+
+    text-align: left;
+}
+
+.result-details p {
+    margin: 15px 0;
+
+    font-size: 16px;
+
+    color: #374151;
+}
+
+.result-details strong {
+    color: #17365d;
+}
+
+.result-details hr {
+    border: none;
+
+    border-top: 1px solid #dbe3ec;
+
+    margin: 20px 0;
+}
+
+.result-details h2 {
+    text-align: center;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    background: #eaf4fc;
+
+    border-radius: 8px;
+
+    color: #1769aa;
+
+    font-size: 28px;
+}
+
+
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 900px) {
+
+    .exam-layout {
+        flex-direction: column;
+
+        padding: 20px;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    #questionNumbers {
+        grid-template-columns: repeat(8, 1fr);
+    }
+
+    .exam-header {
+        padding: 15px 20px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 25px 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .exam-header {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+    }
+
+    .timer {
+        text-align: center;
+    }
+
+    .question-card {
+        padding: 20px;
+    }
+
+    .question-card h2 {
+        font-size: 18px;
+    }
+
+    .navigation-buttons {
+        gap: 10px;
+    }
+
+    .navigation-buttons button {
+        width: 50%;
+    }
+
+    #questionNumbers {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

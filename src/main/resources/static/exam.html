@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MCQ Examination</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="exam-header">
+
+    <div>
+        <h2>Online MCQ Examination</h2>
+
+        <p>
+            Candidate:
+            <span id="candidateName"></span>
+        </p>
+    </div>
+
+    <div class="timer">
+        Time Left:
+        <span id="timer">40:00</span>
+    </div>
+
+</header>
+
+
+<div class="exam-layout">
+
+    <main class="question-section">
+
+        <div id="questionContainer">
+
+            Loading questions...
+
+        </div>
+
+        <div class="navigation-buttons">
+
+            <button id="previousButton">
+                Previous
+            </button>
+
+            <button id="nextButton">
+                Next
+            </button>
+
+        </div>
+
+        <button
+            id="submitExam"
+            class="submit-button"
+        >
+            Submit Examination
+        </button>
+
+    </main>
+
+
+    <aside class="sidebar">
+
+        <h3>Questions</h3>
+
+        <div id="questionNumbers"></div>
+
+        <h3>Camera Active</h3>
+
+        <video
+            id="examCamera"
+            autoplay
+            playsinline
+        ></video>
+
+    </aside>
+
+</div>
+
+
+<script src="exam.js"></script>
+
+</body>
+</html>

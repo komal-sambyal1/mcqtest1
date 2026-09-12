@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Online MCQ Examination</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="logo-section">
+            <img src="images/logo.png" alt="Company Logo" class="logo">
+        </div>
+
+        <h1>Online MCQ Examination</h1>
+
+        <h2>Examination Terms and Conditions</h2>
+
+        <ul>
+            <li>The candidate must answer 40 questions.</li>
+            <li>The total examination duration is 40 minutes.</li>
+            <li>There is no negative marking.</li>
+            <li>The laptop camera must remain active throughout the examination.</li>
+            <li>Ensure you have a stable internet connection.</li>
+            <li>Do not refresh or close the examination page during the test.</li>
+            <li>The examination will be automatically submitted when time expires.</li>
+        </ul>
+
+        <div class="camera-box">
+            <h3>Camera Preview</h3>
+
+            <video id="camera" autoplay playsinline></video>
+
+            <p id="cameraStatus">Please allow camera access to continue.</p>
+        </div>
+
+        <button id="okButton" onclick="goToCandidatePage()" disabled>
+            OK, I Agree
+        </button>
+
+    </div>
+
+</div>
+
+<script src="instructions.js"></script>
+
+</body>
+</html>
