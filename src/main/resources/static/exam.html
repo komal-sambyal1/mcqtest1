@@ -20,18 +20,34 @@
 
 <header class="exam-header">
 
-    <div>
+    <div class="exam-header-left">
+
         <h2>Online MCQ Examination</h2>
 
         <p>
             Candidate:
             <span id="candidateName"></span>
         </p>
+
     </div>
 
-    <div class="timer">
-        Time Left:
-        <span id="timer">40:00</span>
+
+    <div class="exam-header-right">
+
+        <span
+            id="screenStatus"
+            class="screen-status"
+        >
+            Screen Sharing: Active
+        </span>
+
+        <div class="timer">
+
+            Time Left:
+            <span id="timer">40:00</span>
+
+        </div>
+
     </div>
 
 </header>
@@ -47,19 +63,29 @@
 
         </div>
 
+
         <div class="navigation-buttons">
 
-            <button id="previousButton">
+            <button
+                type="button"
+                id="previousButton"
+            >
                 Previous
             </button>
 
-            <button id="nextButton">
+
+            <button
+                type="button"
+                id="nextButton"
+            >
                 Next
             </button>
 
         </div>
 
+
         <button
+            type="button"
             id="submitExam"
             class="submit-button"
         >
@@ -75,13 +101,8 @@
 
         <div id="questionNumbers"></div>
 
-        <h3>Camera Active</h3>
 
-        <video
-            id="examCamera"
-            autoplay
-            playsinline
-        ></video>
+        
 
     </aside>
 
@@ -91,4 +112,5 @@
 <script src="exam.js"></script>
 
 </body>
+
 </html>

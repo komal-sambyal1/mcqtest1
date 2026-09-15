@@ -5,7 +5,7 @@ import com.company.mcqtest.model.QuestionResponse;
 import com.company.mcqtest.model.Result;
 import com.company.mcqtest.model.SubmitRequest;
 import com.company.mcqtest.service.QuestionService;
-
+import com.company.mcqtest.service.ExamAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,8 @@ public class ExamController {
 
     @Autowired
     private QuestionService questionService;
-
+    @Autowired
+    private ExamAttemptService examAttemptService;
 
     @GetMapping("/questions")
     public List<QuestionResponse> getQuestions() {
@@ -45,48 +46,76 @@ public class ExamController {
 
         return response;
     }
+    @GetMapping("/check-email")
+public boolean checkEmail(@RequestParam String email) {
 
+    return !examAttemptService.hasAlreadySubmitted(email);
+}
 
     @PostMapping("/submit")
-    public Result submitExam(@RequestBody SubmitRequest request) {
+public Result submitExam(@RequestBody SubmitRequest request) {
 
-        List<Question> questions = questionService.getAllQuestions();
+    String email = request.getCandidateEmail();
 
-        Map<Integer, String> answers = request.getAnswers();
+    // Check whether this email has already submitted
+    if (examAttemptService.hasAlreadySubmitted(email)) {
 
-        int attempted = 0;
-        int correctAnswers = 0;
-
-        for (Question question : questions) {
-
-            String selectedAnswer = answers.get(question.getId());
-
-            if (selectedAnswer != null && !selectedAnswer.isEmpty()) {
-
-                attempted++;
-
-                if (selectedAnswer.equals(question.getCorrectAnswer())) {
-                    correctAnswers++;
-                }
-            }
-        }
-
-        int totalQuestions = questions.size();
-        int unanswered = totalQuestions - attempted;
-        int wrongAnswers = attempted - correctAnswers;
-
-        // No negative marking
-        int score = correctAnswers;
-
-        return new Result(
-                request.getCandidateName(),
-                request.getCandidateEmail(),
-                totalQuestions,
-                attempted,
-                unanswered,
-                correctAnswers,
-                wrongAnswers,
-                score
+        throw new RuntimeException(
+                "This email has already completed the examination."
         );
     }
+
+    List<Question> questions =
+            questionService.getAllQuestions();
+
+    Map<Integer, String> answers =
+            request.getAnswers();
+
+    int attempted = 0;
+    int correctAnswers = 0;
+
+    for (Question question : questions) {
+
+        String selectedAnswer =
+                answers.get(question.getId());
+
+        if (selectedAnswer != null &&
+                !selectedAnswer.isEmpty()) {
+
+            attempted++;
+
+            if (selectedAnswer.equals(
+                    question.getCorrectAnswer())) {
+
+                correctAnswers++;
+            }
+        }
+    }
+
+    int totalQuestions =
+            questions.size();
+
+    int unanswered =
+            totalQuestions - attempted;
+
+    int wrongAnswers =
+            attempted - correctAnswers;
+
+    int score =
+            correctAnswers;
+
+    // Mark email as submitted
+    examAttemptService.markAsSubmitted(email);
+
+    return new Result(
+            request.getCandidateName(),
+            request.getCandidateEmail(),
+            totalQuestions,
+            attempted,
+            unanswered,
+            correctAnswers,
+            wrongAnswers,
+            score
+    );
+}
 }
