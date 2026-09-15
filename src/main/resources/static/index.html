@@ -1,55 +1,107 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Online MCQ Examination</title>
+    <title>Online Examination - Instructions</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <div class="card">
+        <div class="card">
 
-        <div class="logo-section">
-            <img src="images/logo.png" alt="Company Logo" class="logo">
-        </div>
+            <!-- Company Logo -->
+            <img src="images/logo.png"
+                 alt="Company Logo"
+                 class="company-logo">
 
-        <h1>Online MCQ Examination</h1>
+            <!-- Page Title -->
+            <h1>Online MCQ Examination</h1>
 
-        <h2>Examination Terms and Conditions</h2>
+            <h2>Examination Instructions</h2>
 
-        <ul>
-            <li>The candidate must answer 40 questions.</li>
-            <li>The total examination duration is 40 minutes.</li>
-            <li>There is no negative marking.</li>
-            <li>The laptop camera must remain active throughout the examination.</li>
-            <li>Ensure you have a stable internet connection.</li>
-            <li>Do not refresh or close the examination page during the test.</li>
-            <li>The examination will be automatically submitted when time expires.</li>
-        </ul>
+            <!-- Instructions -->
+            <div class="instructions">
 
-        <div class="camera-box">
-            <h3>Camera Preview</h3>
+                <p>
+                    Please read all the instructions carefully
+                    before starting the examination.
+                </p>
 
-            <video id="camera" autoplay playsinline></video>
+                <ul>
 
-            <p id="cameraStatus">Please allow camera access to continue.</p>
-        </div>
+                    <li>
+                        You must answer a total of
+                        <strong>40 questions.</strong>
+                    </li>
 
-        <button id="okButton" onclick="goToCandidatePage()" disabled>
-            OK, I Agree
-        </button>
+                    <li>
+                        The total duration of the examination is
+                        <strong>40 minutes.</strong>
+                    </li>
 
-    </div>
+                    <li>
+                        There is <strong>no negative marking.</strong>
+                    </li>
 
-</div>
+                    <li>
+                        Your <strong>laptop camera must remain active</strong>
+                        throughout the examination.
+                    </li>
 
-<script src="instructions.js"></script>
+                    <li>
+                        <strong>Screen sharing must remain active</strong>
+                        during the examination.
+                    </li>
 
-</body>
-</html>
+                    <li>
+                        Do not open other applications, websites,
+                        or browser tabs during the examination.
+                    </li>
+
+                    <li>
+                        Do not refresh or close the examination
+                        window unnecessarily.
+                    </li>
+
+                    <li>
+                        The examination will be submitted
+                        automatically when the timer reaches
+                        <strong>00:00.</strong>
+                    </li>
+
+                    <li>
+                        Once the examination is submitted,
+                        you will not be able to take the examination
+                        again using the same email ID.
+                    </li>
+
+                    <li>
+                        Make sure you have a stable internet
+                        connection before starting.
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Camera Section -->
+            <div class="camera-section">
+
+                <h3>Camera Verification</h3>
+
+                <video id="camera"
+                       autoplay
+                       playsinline>
+                </video>
+
+                <p id="cameraStatus">
+                    Checking camera
+```
