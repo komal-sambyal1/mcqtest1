@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +8,7 @@
 
     <title>Online Examination - Instructions</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -103,5 +103,43 @@
                 </video>
 
                 <p id="cameraStatus">
-                    Checking camera
-```
+                    Checking camera permission...
+                </p>
+
+            </div>
+
+            <!-- Screen Sharing Section -->
+            <div class="screen-section">
+
+                <h3>Screen Sharing</h3>
+
+                <p id="screenStatus">
+                    Please start screen sharing before continuing.
+                </p>
+
+                <button type="button"
+                        id="startScreenShare">
+                    Start Screen Sharing
+                </button>
+
+            </div>
+
+            <!-- OK Button -->
+            <button type="button"
+                    id="okButton"
+                    onclick="goToCandidatePage()"
+                    disabled>
+                OK
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="instructions.js"></script>
+
+</body>
+
+</html>
+

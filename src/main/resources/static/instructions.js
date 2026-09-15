@@ -1,26 +1,18 @@
+
 /* =========================================
-   INSTRUCTION PAGE ELEMENTS
-   ========================================= */
+   GET PAGE ELEMENTS
+========================================= */
 
-const camera =
-    document.getElementById("camera");
-
-const okButton =
-    document.getElementById("okButton");
-
-const cameraStatus =
-    document.getElementById("cameraStatus");
-
-const screenStatus =
-    document.getElementById("screenStatus");
-
-const screenShareButton =
-    document.getElementById("startScreenShare");
+const camera = document.getElementById("camera");
+const okButton = document.getElementById("okButton");
+const cameraStatus = document.getElementById("cameraStatus");
+const screenStatus = document.getElementById("screenStatus");
+const screenShareButton = document.getElementById("startScreenShare");
 
 
 /* =========================================
    VARIABLES
-   ========================================= */
+========================================= */
 
 let cameraStream = null;
 let screenStream = null;
@@ -30,20 +22,14 @@ let screenSharingActive = false;
 
 
 /* =========================================
-   CHECK WHETHER USER CAN PROCEED
-   ========================================= */
+   CHECK PERMISSIONS
+========================================= */
 
 function checkPermissions() {
 
-    if (
-        cameraActive === true &&
-        screenSharingActive === true
-    ) {
+    if (cameraActive && screenSharingActive) {
 
         okButton.disabled = false;
-
-        cameraStatus.innerText =
-            "Camera is active.";
 
         screenStatus.innerText =
             "Screen sharing is active. You may proceed.";
@@ -51,27 +37,37 @@ function checkPermissions() {
     } else {
 
         okButton.disabled = true;
-
     }
-
 }
 
 
 /* =========================================
-   CAMERA ACCESS
-   ========================================= */
+   CAMERA
+========================================= */
 
-navigator.mediaDevices
-    .getUserMedia({
-        video: true,
-        audio: false
-    })
-    .then(function(stream) {
+async function startCamera() {
 
-        cameraStream = stream;
+    try {
 
-        camera.srcObject =
-            stream;
+        if (!navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia) {
+
+            cameraStatus.innerText =
+                "Camera is not supported by this browser.";
+
+            return;
+        }
+
+        cameraStatus.innerText =
+            "Requesting camera permission...";
+
+        cameraStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+            });
+
+        camera.srcObject = cameraStream;
 
         cameraActive = true;
 
@@ -80,166 +76,245 @@ navigator.mediaDevices
 
         checkPermissions();
 
-    })
-    .catch(function(error) {
+    } catch (error) {
 
-        console.error(
-            "Camera error:",
-            error
-        );
+        console.error("Camera Error:", error);
 
         cameraActive = false;
 
         cameraStatus.innerText =
-            "Camera permission is required to continue the examination.";
+            "Camera permission is required.";
 
         okButton.disabled = true;
-
-    });
+    }
+}
 
 
 /* =========================================
    SCREEN SHARING
-   ========================================= */
+========================================= */
 
 async function startScreenSharing() {
 
+    console.log("Screen sharing button clicked.");
+
+    screenStatus.innerText =
+        "Opening screen sharing permission...";
+
+
+    /* Check browser support */
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getDisplayMedia) {
+
+        screenStatus.innerText =
+            "Screen sharing is not supported.";
+
+        alert(
+            "Screen sharing is not supported in this browser. Please use Google Chrome or Microsoft Edge."
+        );
+
+        return;
+    }
+
+
     try {
 
-        screenStream =
-            await navigator
-                .mediaDevices
-                .getDisplayMedia({
-                    video: true,
-                    audio: false
-                });
+        /*
+         * IMPORTANT:
+         * getDisplayMedia() must be called directly
+         * as a result of the user's button click.
+         */
 
+        screenStream =
+            await navigator.mediaDevices.getDisplayMedia({
+                video: {
+                    cursor: "always"
+                },
+                audio: false
+            });
+
+
+        console.log(
+            "Screen sharing permission granted."
+        );
+
+
+        /* Get screen video track */
+
+        const videoTracks =
+            screenStream.getVideoTracks();
+
+
+        if (videoTracks.length === 0) {
+
+            screenStatus.innerText =
+                "No screen was selected.";
+
+            return;
+        }
+
+
+        /* Screen sharing is active */
 
         screenSharingActive = true;
 
-
         screenStatus.innerText =
-            "Screen sharing is active.";
-
+            "Screen sharing is ACTIVE. You may proceed.";
 
         screenShareButton.innerText =
             "Screen Sharing Active";
 
+        screenShareButton.disabled = true;
 
-        screenShareButton.disabled =
-            true;
 
+        /* Enable OK if camera is also active */
 
         checkPermissions();
 
 
         /* =========================================
-           DETECT WHEN SCREEN SHARING IS STOPPED
-           ========================================= */
+           DETECT WHEN USER STOPS SHARING
+        ========================================= */
 
         const videoTrack =
-            screenStream.getVideoTracks()[0];
+            videoTracks[0];
 
 
         videoTrack.addEventListener(
             "ended",
             function() {
 
-                screenSharingActive =
-                    false;
+                console.log(
+                    "Screen sharing stopped."
+                );
 
+                screenSharingActive = false;
+
+                screenStream = null;
 
                 screenStatus.innerText =
                     "Screen sharing has been stopped.";
 
-
                 screenShareButton.innerText =
                     "Start Screen Sharing";
 
+                screenShareButton.disabled = false;
 
-                screenShareButton.disabled =
-                    false;
-
-
-                okButton.disabled =
-                    true;
-
+                okButton.disabled = true;
 
                 alert(
-                    "Screen sharing is required to start the examination. Please start screen sharing again."
+                    "Screen sharing has been stopped. Please start it again."
                 );
-
             }
         );
+
 
     } catch (error) {
 
         console.error(
-            "Screen sharing error:",
+            "Screen Sharing Error:",
             error
         );
 
-        screenSharingActive =
-            false;
+
+        screenSharingActive = false;
+
+        screenShareButton.disabled = false;
+
+        screenShareButton.innerText =
+            "Start Screen Sharing";
 
 
-        screenStatus.innerText =
-            "Screen sharing permission is required.";
+        if (error.name === "NotAllowedError") {
+
+            screenStatus.innerText =
+                "Screen sharing permission was denied.";
+
+            alert(
+                "Screen sharing was cancelled or permission was denied. Please click Start Screen Sharing again and select a screen."
+            );
+
+        } else if (error.name === "AbortError") {
+
+            screenStatus.innerText =
+                "Screen sharing was cancelled.";
+
+        } else {
+
+            screenStatus.innerText =
+                "Unable to start screen sharing.";
+
+            alert(
+                "Unable to start screen sharing. Please try again."
+            );
+        }
 
 
-        okButton.disabled =
-            true;
-
-
-        alert(
-            "Please allow screen sharing to continue the examination."
-        );
-
+        okButton.disabled = true;
     }
-
 }
 
 
 /* =========================================
    SCREEN SHARE BUTTON
-   ========================================= */
+========================================= */
 
 if (screenShareButton) {
 
     screenShareButton.addEventListener(
         "click",
-        startScreenSharing
+        function(event) {
+
+            event.preventDefault();
+
+            startScreenSharing();
+
+        }
     );
 
+} else {
+
+    console.error(
+        "ERROR: startScreenShare button was not found."
+    );
 }
 
 
 /* =========================================
-   OK / CONTINUE BUTTON
-   ========================================= */
+   OK BUTTON
+========================================= */
 
 function goToCandidatePage() {
 
-    if (
-        cameraActive !== true ||
-        screenSharingActive !== true
-    ) {
+    if (!cameraActive) {
 
         alert(
-            "Please allow both camera access and screen sharing before continuing."
+            "Please allow camera access first."
         );
 
         return;
-
     }
 
 
+    if (!screenSharingActive) {
+
+        alert(
+            "Please start screen sharing first."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "permissionsCompleted",
+        "true"
+    );
+
+
     /*
-     * Stop the camera preview on the
-     * instruction page.
-     *
-     * The exam page will request the
-     * camera again.
+     * Stop camera before leaving this page.
      */
 
     if (cameraStream) {
@@ -251,41 +326,29 @@ function goToCandidatePage() {
                 track.stop();
 
             });
-
     }
 
 
     /*
-     * IMPORTANT:
-     *
-     * We do NOT stop screenStream here.
-     *
-     * However, browser screen-sharing
-     * permissions/streams generally belong
-     * to the current document. When navigating
-     * to another page, the browser may end it.
-     *
-     * Therefore exam.js will monitor/request
-     * according to the browser's behavior.
-     */
-
-
-    /*
-     * Save that the required permissions
-     * were completed on the instruction page.
-     */
-
-    localStorage.setItem(
-        "permissionsCompleted",
-        "true"
-    );
-
-
-    /*
-     * Go to candidate details page.
+     * Do not manually stop screen sharing here.
+     * The browser controls the screen-sharing stream.
      */
 
     window.location.href =
         "candidate.html";
-
 }
+
+
+/* =========================================
+   START CAMERA WHEN PAGE LOADS
+========================================= */
+
+window.addEventListener(
+    "load",
+    function() {
+
+        startCamera();
+
+    }
+);
+
