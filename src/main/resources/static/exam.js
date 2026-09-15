@@ -655,9 +655,7 @@ navigator.mediaDevices
         );
 
 
-        alert(
-            "Camera access is required for this examination."
-        );
+        
 
     });
 
